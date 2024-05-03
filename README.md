@@ -1,2 +1,2 @@
 # Instagram-Clone
-Build Instagram Clone with Livewire
+Instagram Clone with Livewire
