@@ -4,10 +4,13 @@ import livewire from '@defstudio/vite-livewire-plugin'; // Here we import it
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
+            input: [
+                'resources/css/app.css',
+                'resources/js/app.js',
+            ],
             refresh: false,
         }),
-
+        
         livewire({  // Here we add it to the plugins
             refresh: ['resources/css/app.css'],
         }),
