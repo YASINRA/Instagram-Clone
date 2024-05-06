@@ -40,6 +40,15 @@
                         @endfor
                 </ul>
             </section>
+
+            {{-- posts --}}
+
+            <section class="mt-5 space-y-4 p-2">
+
+              <livewire:post.item />
+
+            </section>
+        
         </aside>
 
         <aside class="lg:col-span-4 border hidden lg:block p-4">
