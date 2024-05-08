@@ -11,7 +11,6 @@ class Item extends Component
 
     public function render()
     {
-        $this->dispatch('swiper');
         return view('livewire.post.view.item');
     }
 }
