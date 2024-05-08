@@ -1,4 +1,23 @@
-<div class="w-full h-full">
+<div
+x-data="{
+  canLoadMore:@entangle('canLoadMore')
+}"
+
+@scroll.window.trottle="
+
+  scrollTop= window.scrollY ||window.scrollTop;
+  divHeight= window.innerHeight||document.documentElement.clientHeight;
+  scrollHeight = document.documentElement.scrollHeight;
+
+  isScrolled= scrollTop+ divHeight >= scrollHeight-1;
+
+  {{-- Check if user can load more  --}}
+
+  if(isScrolled && canLoadMore){
+    @this.loadMore();
+  }
+"
+class="w-full h-full">
 
     {{-- Header --}}
     <header class="md:hidden sticky top-0 z-50 bg-white">
@@ -9,8 +28,7 @@
           </div>
             <div class="col-span-8 flex justify-center px-2">
               <input type="text" placeholder="Search"
-               class=" border-0 outline-none w-full focus:outline-none bg-gray-100 rounded-lg focus:ring-0 hover:ring-0"
-              >
+               class=" border-0 outline-none w-full focus:outline-none bg-gray-100 rounded-lg focus:ring-0 hover:ring-0">
 
             </div>
           <div class="col-span-1 flex justify-center">
@@ -47,7 +65,7 @@
 
               @if ($posts)
 
-              @foreach ($posts->take(10) as $post)
+              @foreach ($posts as $post)
 
                 <livewire:post.item wire:key="post-{{$post->id}}"  :post="$post" />
 
