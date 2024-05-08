@@ -19,15 +19,13 @@ class Home extends Component
     #[On('post-created')]
     function postCreaed($id)
     {
-
         $post = Post::find($id);
-
         $this->posts = $this->posts->prepend($post);
     }
 
     function mount()
     {
-        $this->posts = Post::latest()->get();
+        $this->posts = Post::with('comments')->latest()->get();
     }
 
     public function render()

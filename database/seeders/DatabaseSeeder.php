@@ -4,7 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Comment;
+use App\Models\Media;
 use App\Models\Post;
+use Database\Factories\CommentReplyFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,8 +24,12 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Post::factory(20)->create(['type'=>'reel']);
-        Post::factory(rand(10,40))->create(['type'=>'post']);
+        Post::factory(20)->hasComments(rand(20,20))->create(['type'=>'post']);
+        Post::factory(12)->hasComments(rand(15,20))->create(['type'=>'reel']);
 
+        // Create comment replies
+        Comment::limit(50)->each(function($comment){
+            $comment::factory(rand(1,5))->isReply($comment->commentable)->create(['parent_id'=>$comment->id]);
+        });
     }
 }
