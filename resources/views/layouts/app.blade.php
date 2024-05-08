@@ -15,7 +15,7 @@
             [x-cloak]{
                 display: none !important;
             }
-        </style>   
+        </style>
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -27,13 +27,16 @@
                 <!-- Page content here -->
                 <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">Open drawer</label>
                 {{$slot}}
-            </div> 
+            </div>
             <div class="drawer-side">
-                <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label> 
-                
+                <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
+
                 @include('layouts.sidebar')
 
             </div>
         </div>
+
+        @livewire('wire-elements-modal')
+
     </body>
 </html>
