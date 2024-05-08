@@ -90,8 +90,6 @@
                 <textarea wire:model="description" placeholder="Add a caption."
                     class="  border-0 focus:border-0 px-0  w-full  rounded-lg    bg-white  h-32 focus:outline-none  focus:ring-0  "></textarea>
 
-                <p class="mt-3 text-xs text-gray-400 dark:text-gray-600">Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit.</p>
             </div>
 
             <div class="flex gird grid-cols-12 items-center">
