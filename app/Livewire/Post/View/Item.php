@@ -27,6 +27,11 @@ class Item extends Component
         $this->reset( ['body']);
     }
 
+    function setParent(Comment $comment)  {
+        $this->parent_id=$comment->id;
+        $this->body="@".$comment->user->name;//we will use username in the future
+    }
+
     public function render()
     {
         $comments = $this->post->comments()->whereDoesntHave('parent')->get();

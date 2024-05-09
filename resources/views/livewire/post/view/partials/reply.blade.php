@@ -8,9 +8,8 @@
         <div class="col-span-6   flex flex-wrap text-sm ">
             <p>
             <span class="font-bold text-sm"> {{$reply->id}} {{$reply->user->name}} </span>
-                 <span class="font-bold">{{'@'.$reply->parent->user->name}} </span>   {{$reply->body}}
+                  {{$reply->body}}
             </p>
-
         </div>
 
         {{-- Like --}}
@@ -30,7 +29,7 @@
 
             <span class=""> {{$reply->created_at->diffForHumans()}} </span>
             <span class="font-bold"> 345 Likes</span>
-            <span class="font-semibold"> Reply</span>
+            <button wire:click="setParent({{$reply->id}})" class="font-semibold"> Reply</button>
 
         </div>
     </div>
@@ -39,7 +38,6 @@
 
 
 @if ($reply->replies->count() > 0)
-
 
 @foreach ($reply->replies as $reply)
 
