@@ -135,7 +135,7 @@
 
             {{-- Likes or views --}}
             @if ($post->totalLikers>0 && !$post->hide_like_view)
-            <p class="font-bold text-sm">{{$post->totalLikers}} {{$post->totalLikers>1?'likes':'like'}}</p>
+                <p class="font-bold text-sm">{{$post->totalLikers}} {{$post->totalLikers>1?'likes':'like'}}</p>
             @endif
 
 
