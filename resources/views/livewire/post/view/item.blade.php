@@ -25,11 +25,9 @@
     </aside>
 
     <aside
-        class="lg:col-span-5 h-full   scrollbar-hide  relative flex gap-4 flex-col overflow-hidden overflow-y-scroll  ">
-
+        class="lg:col-span-5 h-full   scrollbar-hide  relative flex gap-4 flex-col overflow-hidden overflow-y-scroll">
         <header class="flex items-center gap-3 border-b py-2
-                  sticky  top-0 bg-white z-10
-             ">
+                  sticky  top-0 bg-white z-10">
 
             <x-avatar src="https://source.unsplash.com/500x500?face-{{rand(0,10)}}" class="w-9 h-9" />
 
@@ -136,15 +134,22 @@
                 comments</button>
 
             {{-- Leave comment --}}
-            <form class="grid grid-cols-12 items-center w-full py-2  " x-data="{ inputText: '' }">
+            <form
+             wire:key="{{time()}}"
+             x-data="{
+                body: @entangle('body'),
+                parent_id: @entangle('parent_id')
+            }"
+             @submit.prevent="$wire.addComment()"
+             class="grid grid-cols-12 items-center w-full py-2  " >
                 @csrf
-                <input placeholder="Leave a comment" type="text"
+                <input  placeholder="Leave a comment" type="text"
                     class="border-0 col-span-10 l py-2  placeholder:text-sm text-sm outline-none w-full focus:outline-none px-0 rounded-lg hover:ring-0 focus:ring-0"
-                    x-model="inputText">
+                    x-model="body">
 
                 <div class="col-span-1 ml-auto flex justify-end text-right  ">
-                    <button x-cloak class="text-sm font-semibold flex justify-end text-blue-500"
-                        x-show="inputText.length > 0">Post</button>
+                    <button type="submit" x-cloak class="text-sm font-semibold flex justify-end text-blue-500"
+                        x-show="body.length > 0">Post</button>
                 </div>
 
                 <span class="col-span-1 ml-auto  ">
