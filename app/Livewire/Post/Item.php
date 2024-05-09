@@ -16,6 +16,11 @@ class Item extends Component
         auth()->user()->toggleLike($this->post);
     }
 
+    function toggleCommentLike(Comment $comment)  {
+        abort_unless(auth()->check(),401);
+        auth()->user()->toggleLike($comment);
+    }
+
     function addComment()  {
         $this->validate(['body'=>'required']);
         #create comment
