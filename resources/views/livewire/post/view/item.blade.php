@@ -51,6 +51,7 @@
 
         <main class="  space-y-3">
 
+            @if ($post->allow_commenting)
             @if ($comments)
 
             @foreach ($comments as $comment)
@@ -62,10 +63,10 @@
 
                 @if ($comment->replies->count() > 0)
 
-                    @foreach ($comment->replies as $reply)
-                    {{-- reply --}}
-                    @include('livewire.post.view.partials.reply')
-                    @endforeach
+                @foreach ($comment->replies as $reply)
+                {{-- reply --}}
+                @include('livewire.post.view.partials.reply')
+                @endforeach
 
                 @endif
 
@@ -75,6 +76,8 @@
             @else
 
             No commnets
+
+            @endif
 
             @endif
 
@@ -129,21 +132,17 @@
 
             {{-- View Post Modal--}}
             <button
-                onclick="Livewire.dispatch('openModal',{ component: 'post.view.modal', arguments:{'post':{{$post->id}}}})"
                 class="text-slate-500/90 text-sm font-medium" wire:ignore>Total {{$post->comments->count()}}
                 comments</button>
 
+        @if ($post->allow_commenting)
             {{-- Leave comment --}}
-            <form
-             wire:key="{{time()}}"
-             x-data="{
+            <form wire:key="{{time()}}" x-data="{
                 body: @entangle('body'),
                 parent_id: @entangle('parent_id')
-            }"
-             @submit.prevent="$wire.addComment()"
-             class="grid grid-cols-12 items-center w-full py-2  " >
+             }" @submit.prevent="$wire.addComment()" class="grid grid-cols-12 items-center w-full py-2  ">
                 @csrf
-                <input  placeholder="Leave a comment" type="text"
+                <input placeholder="Leave a comment" type="text"
                     class="border-0 col-span-10 l py-2  placeholder:text-sm text-sm outline-none w-full focus:outline-none px-0 rounded-lg hover:ring-0 focus:ring-0"
                     x-model="body">
 
@@ -160,6 +159,7 @@
                     </svg>
                 </span>
             </form>
+        @endif
 
         </footer>
 
