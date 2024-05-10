@@ -11,11 +11,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Overtrue\LaravelFavorite\Traits\Favoriter;
+use Overtrue\LaravelFollow\Traits\Followable;
+use Overtrue\LaravelFollow\Traits\Follower;
 use Overtrue\LaravelLike\Traits\Liker;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, Liker, Favoriter;
+    use HasApiTokens, HasFactory, Notifiable, Liker, Favoriter, Follower, Followable;
 
     /**
      * The attributes that are mass assignable.
