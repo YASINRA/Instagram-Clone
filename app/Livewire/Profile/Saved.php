@@ -8,7 +8,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class Home extends Component
+class Saved extends Component
 {
     public $user;
 
@@ -33,7 +33,7 @@ class Home extends Component
     {
         $this->user = User::whereUsername($this->user->username)->withCount(['followers', 'followings', 'posts'])->firstOrFail();
 
-        $posts = $this->user->posts()->whereType('post')->get();
-        return view('livewire.profile.home', ['posts' => $posts]);
+        $posts = $this->user->getFavoriteItems(Post::class)->get();
+        return view('livewire.profile.saved', ['posts' => $posts]);
     }
 }
