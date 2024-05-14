@@ -86,7 +86,7 @@
                 {{-- Check mime --}}
                 @switch($cover?->mime)
                     @case('video')
-                        <x-video source="{{ $cover->url }}" />
+                        <x-video :controls="false" :cover="true" source="{{ $cover->url }}" />
                     @break
 
                     @case('image')
