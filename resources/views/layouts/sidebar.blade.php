@@ -23,29 +23,29 @@
     {{-- Side content --}}
     <ul class="space-y-4 mt-2">
 
-        <li><a href="/" class="flex items-center gap-5 ">
+        <li><a wire:navigate href="/" class="flex items-center gap-5 ">
 
                 <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                        <path
-                            d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
-                        <path
-                            d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
-                    </svg>
-
-                    {{--
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                    </svg>
-
-                    --}}
+                    @if (request()->routeIs('home'))
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                            <path
+                                d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+                            <path
+                                d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+                        </svg>
+                    @else
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                        </svg>
+                    @endif
 
 
                 </span>
 
-                <h4 x-cloak x-show="!(shrink||drawer)" class=" text-lg font-extrabold">Home</h4>
+                <h4 x-cloak x-show="!(shrink||drawer)"
+                    class=" text-lg  {{ request()->routeIs('home') ? 'font-bold' : 'font-medium' }} ">Home</h4>
             </a></li>
 
         <li><a class="flex items-center gap-5">
@@ -64,27 +64,28 @@
             </a></li>
 
 
-        <li><a class="flex items-center gap-5">
+        <li><a wire:navigate href="{{ route('explore') }}" class="flex items-center gap-5">
 
                 <span>
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        fill="currentColor" viewBox="0 0 16 16">
-                        <path
-                            d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
-                        <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z" />
-                    </svg>
-
-                    {{--
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        fill="currentColor" viewBox="0 0 16 16">
-                        <path
-                            d="M15.5 8.516a7.5 7.5 0 1 1-9.462-7.24A1 1 0 0 1 7 0h2a1 1 0 0 1 .962 1.276 7.503 7.503 0 0 1 5.538 7.24zm-3.61-3.905L6.94 7.439 4.11 12.39l4.95-2.828 2.828-4.95z" />
-                    </svg>
-                    --}}
+                    @if (request()->routeIs('explore'))
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="currentColor" viewBox="0 0 16 16">
+                            <path
+                                d="M15.5 8.516a7.5 7.5 0 1 1-9.462-7.24A1 1 0 0 1 7 0h2a1 1 0 0 1 .962 1.276 7.503 7.503 0 0 1 5.538 7.24zm-3.61-3.905L6.94 7.439 4.11 12.39l4.95-2.828 2.828-4.95z" />
+                        </svg>
+                    @else
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="currentColor" viewBox="0 0 16 16">
+                            <path
+                                d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+                            <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z" />
+                        </svg>
+                    @endif
 
                 </span>
 
-                <h4 x-cloak x-show="!(shrink||drawer)" class=" text-lg font-medium">Explore</h4>
+                <h4 x-cloak x-show="!(shrink||drawer)"
+                    class=" text-lg {{ request()->routeIs('explore') ? 'font-bold' : 'font-medium' }} ">Explore</h4>
             </a></li>
 
 
@@ -106,7 +107,12 @@
                     </svg>
 
 
-                    {{-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" id="instagram-reel"><path fill="#000" fill-rule="evenodd" d="M12.6126 1H8.72076L8.94868 1.68377L10.7208 7H14.6126L13.0513 2.31623L12.6126 1ZM15.9766 9C15.9921 9.00036 16.0076 9.00036 16.0231 9H23V17.5C23 20.5376 20.5376 23 17.5 23H6.5C3.46243 23 1 20.5376 1 17.5V9H9.97665C9.99208 9.00036 10.0076 9.00036 10.0231 9H15.9766ZM16.7208 7L14.9487 1.68377L14.7208 1H17.5C20.5376 1 23 3.46243 23 6.5V7H16.7208ZM6.5 1H6.61257L7.05132 2.31623L8.61257 7H1V6.5C1 3.46243 3.46243 1 6.5 1ZM10.0735 10.1808C9.76799 9.96694 9.36892 9.94083 9.03819 10.113C8.70746 10.2852 8.5 10.6271 8.5 11V18C8.5 18.3729 8.70746 18.7148 9.03819 18.887C9.36892 19.0592 9.76799 19.0331 10.0735 18.8192L15.0735 15.3192C15.3408 15.1321 15.5 14.8263 15.5 14.5C15.5 14.1737 15.3408 13.8679 15.0735 13.6808L10.0735 10.1808Z" clip-rule="evenodd"></path></svg> --}}
+                    {{-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"
+                    id="instagram-reel">
+                    <path fill="#000" fill-rule="evenodd"
+                        d="M12.6126 1H8.72076L8.94868 1.68377L10.7208 7H14.6126L13.0513 2.31623L12.6126 1ZM15.9766 9C15.9921 9.00036 16.0076 9.00036 16.0231 9H23V17.5C23 20.5376 20.5376 23 17.5 23H6.5C3.46243 23 1 20.5376 1 17.5V9H9.97665C9.99208 9.00036 10.0076 9.00036 10.0231 9H15.9766ZM16.7208 7L14.9487 1.68377L14.7208 1H17.5C20.5376 1 23 3.46243 23 6.5V7H16.7208ZM6.5 1H6.61257L7.05132 2.31623L8.61257 7H1V6.5C1 3.46243 3.46243 1 6.5 1ZM10.0735 10.1808C9.76799 9.96694 9.36892 9.94083 9.03819 10.113C8.70746 10.2852 8.5 10.6271 8.5 11V18C8.5 18.3729 8.70746 18.7148 9.03819 18.887C9.36892 19.0592 9.76799 19.0331 10.0735 18.8192L15.0735 15.3192C15.3408 15.1321 15.5 14.8263 15.5 14.5C15.5 14.1737 15.3408 13.8679 15.0735 13.6808L10.0735 10.1808Z"
+                        clip-rule="evenodd"></path>
+                </svg> --}}
 
 
                 </span>
@@ -130,10 +136,10 @@
                     </svg>
 
                     {{-- <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        fill="currentColor" viewBox="0 0 16 16">
-                        <path
-                            d="M0 7.76C0 3.301 3.493 0 8 0s8 3.301 8 7.76-3.493 7.76-8 7.76c-.81 0-1.586-.107-2.316-.307a.639.639 0 0 0-.427.03l-1.588.702a.64.64 0 0 1-.898-.566l-.044-1.423a.639.639 0 0 0-.215-.456C.956 12.108 0 10.092 0 7.76zm5.546-1.459-2.35 3.728c-.225.358.214.761.551.506l2.525-1.916a.48.48 0 0 1 .578-.002l1.869 1.402a1.2 1.2 0 0 0 1.735-.32l2.35-3.728c.226-.358-.214-.761-.551-.506L9.728 7.381a.48.48 0 0 1-.578.002L7.281 5.98a1.2 1.2 0 0 0-1.735.32z" />
-                    </svg> --}}
+                    fill="currentColor" viewBox="0 0 16 16">
+                    <path
+                        d="M0 7.76C0 3.301 3.493 0 8 0s8 3.301 8 7.76-3.493 7.76-8 7.76c-.81 0-1.586-.107-2.316-.307a.639.639 0 0 0-.427.03l-1.588.702a.64.64 0 0 1-.898-.566l-.044-1.423a.639.639 0 0 0-.215-.456C.956 12.108 0 10.092 0 7.76zm5.546-1.459-2.35 3.728c-.225.358.214.761.551.506l2.525-1.916a.48.48 0 0 1 .578-.002l1.869 1.402a1.2 1.2 0 0 0 1.735-.32l2.35-3.728c.226-.358-.214-.761-.551-.506L9.728 7.381a.48.48 0 0 1-.578.002L7.281 5.98a1.2 1.2 0 0 0-1.735.32z" />
+                </svg> --}}
 
                 </span>
 
@@ -150,13 +156,12 @@
                     </svg>
 
                     {{--
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                        class="w-6 h-6">
-                        <path
-                            d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-                    </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                    <path
+                        d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                </svg>
 
-                    --}}
+                --}}
 
                 </span>
 
@@ -164,7 +169,8 @@
             </a></li>
 
         <li>
-            <div class="flex items-center gap-5" onclick="Livewire.dispatch('openModal', { component: 'post.create' })">
+            <div onclick="Livewire.dispatch('openModal',{ component: 'post.create' })" class="flex items-center gap-5">
+
                 <span class="border border-gray-600  rounded-lg p-px">
 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.9"
@@ -178,17 +184,16 @@
             </div>
         </li>
 
-        @auth
+        <li><a wire:navigate href="{{ route('profile.home', auth()->user()->username) }}"
+                class="flex items-center gap-5">
 
-            <li><a href="{{ route('profile.home', auth()->user()->username) }}" class="flex items-center gap-5">
 
+                <x-avatar wire:ignore src="https://source.unsplash.com/500x500?face-{{ rand(0, 10) }}"
+                    class=" w-7 h-7 shrink-0" />
 
-                    <x-avatar src="https://source.unsplash.com/400x400?face" class=" w-7 h-7 shrink-0" />
-
-                    <h4 x-cloak x-show="!(shrink||drawer)" class=" text-lg font-medium">Profile</h4>
-                </a></li>
-
-        @endauth
+                <h4 x-cloak x-show="!(shrink||drawer)"
+                    class=" text-lg  {{ request()->routeIs('profile.home') ? 'font-bold' : 'font-medium' }} ">Profile</h4>
+            </a></li>
 
     </ul>
 
@@ -224,8 +229,6 @@
 
                     </a></li>
 
-
-
                 <hr>
 
                 <li><a class="py-2">Settings</a></li>
@@ -238,12 +241,11 @@
 
                             <button
                                 onclick="event.preventDefault();
-                        this.closest('form').submit();">
+                    this.closest('form').submit();">
                                 Logout
                             </button>
-                            {{-- <x-dropdown-link :href="route('logout')"
-                                onclick="event.preventDefault();
-                                            this.closest('form').submit();">
+                            {{-- <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
+                                        this.closest('form').submit();">
                             {{ __('Log Out') }}
                         </x-dropdown-link> --}}
                         </form>
@@ -253,11 +255,6 @@
         </div>
     </footer>
 
-
-
-
-
-    {{-- TODO: When you create sidebar as livewire component  use @teleport blade directive --}}
     <template x-teleport="body">
         <div x-show="drawer" class="fixed inset-y-0 left-[70px] w-96 bg-red-500 border rounded-r-2xl z-[5]">
 
