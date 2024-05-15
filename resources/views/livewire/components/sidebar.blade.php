@@ -1,13 +1,13 @@
 <div x-data="{
-    shrink: false,
-    drawer: false
+    shrink: @entangle('shrink').live,
+    drawer: @entangle('drawer').live,
+    showSearch:false,
+    showNotifications:false
 
-}" class="menu p-3   w-20 overflow-x-hidden h-full grid bg-white border-r text-base-content"
-    :class="{ 'w-72 ': !shrink }">
+}" class="menu p-3   w-20  h-full grid bg-white border-r text-base-content" :class="{ 'w-72 ': !shrink }">
 
     {{-- Logo --}}
     <div class="pt-3">
-
         <div x-show="shrink || drawer" class="w-full px-4">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-instagram w-6 h-6" viewBox="0 0 16 16">
@@ -16,16 +16,15 @@
             </svg>
         </div>
 
-        <img x-cloak x-show="!(shrink ||drawer)" src="{{ asset('assets/logo.png') }}" class="h-16 w-44 text-black"
+        <img x-cloak x-show="!(shrink||drawer)" src="{{ asset('assets/logo.png') }}" class="h-16 w-44 text-black"
             alt="logo">
     </div>
-
     {{-- Side content --}}
     <ul class="space-y-4 mt-2">
 
         <li><a wire:navigate href="/" class="flex items-center gap-5 ">
 
-                <span>
+                <span wire:ignore>
                     @if (request()->routeIs('home'))
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                             <path
@@ -41,14 +40,14 @@
                         </svg>
                     @endif
 
-
                 </span>
 
                 <h4 x-cloak x-show="!(shrink||drawer)"
                     class=" text-lg  {{ request()->routeIs('home') ? 'font-bold' : 'font-medium' }} ">Home</h4>
             </a></li>
 
-        <li><a class="flex items-center gap-5">
+        <li>
+            <div @click="showSearch=true;showNotifications=false;drawer=true" class="flex items-center gap-5">
 
                 <span>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -57,12 +56,11 @@
                             clip-rule="evenodd" />
                     </svg>
 
-
                 </span>
 
                 <h4 x-cloak x-show="!(shrink||drawer)" class=" text-lg font-medium">Search</h4>
-            </a></li>
-
+            </div>
+        </li>
 
         <li><a wire:navigate href="{{ route('explore') }}" class="flex items-center gap-5">
 
@@ -89,7 +87,7 @@
             </a></li>
 
 
-        <li><a wire:navigate href="{{route('reels')}}" class="flex items-center gap-5">
+        <li><a wire:navigate href="{{ route('reels') }}" class="flex items-center gap-5">
 
                 <span>
                     @if (request()->routeIs('reels'))
@@ -116,9 +114,9 @@
 
                 </span>
 
-                <h4 x-cloak x-show="!(shrink||drawer)" class=" text-lg {{request()->routeIs('reels')?'font-bold':'font-medium'}}">Reel</h4>
+                <h4 x-cloak x-show="!(shrink||drawer)"
+                    class=" text-lg  {{ request()->routeIs('reels') ? 'font-bold' : 'font-medium' }}">Reels</h4>
             </a></li>
-
 
         <li><a class="flex items-center gap-5">
 
@@ -135,10 +133,10 @@
                     </svg>
 
                     {{-- <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                    fill="currentColor" viewBox="0 0 16 16">
-                    <path
-                        d="M0 7.76C0 3.301 3.493 0 8 0s8 3.301 8 7.76-3.493 7.76-8 7.76c-.81 0-1.586-.107-2.316-.307a.639.639 0 0 0-.427.03l-1.588.702a.64.64 0 0 1-.898-.566l-.044-1.423a.639.639 0 0 0-.215-.456C.956 12.108 0 10.092 0 7.76zm5.546-1.459-2.35 3.728c-.225.358.214.761.551.506l2.525-1.916a.48.48 0 0 1 .578-.002l1.869 1.402a1.2 1.2 0 0 0 1.735-.32l2.35-3.728c.226-.358-.214-.761-.551-.506L9.728 7.381a.48.48 0 0 1-.578.002L7.281 5.98a1.2 1.2 0 0 0-1.735.32z" />
-                </svg> --}}
+                        fill="currentColor" viewBox="0 0 16 16">
+                        <path
+                            d="M0 7.76C0 3.301 3.493 0 8 0s8 3.301 8 7.76-3.493 7.76-8 7.76c-.81 0-1.586-.107-2.316-.307a.639.639 0 0 0-.427.03l-1.588.702a.64.64 0 0 1-.898-.566l-.044-1.423a.639.639 0 0 0-.215-.456C.956 12.108 0 10.092 0 7.76zm5.546-1.459-2.35 3.728c-.225.358.214.761.551.506l2.525-1.916a.48.48 0 0 1 .578-.002l1.869 1.402a1.2 1.2 0 0 0 1.735-.32l2.35-3.728c.226-.358-.214-.761-.551-.506L9.728 7.381a.48.48 0 0 1-.578.002L7.281 5.98a1.2 1.2 0 0 0-1.735.32z" />
+                    </svg> --}}
 
                 </span>
 
@@ -155,12 +153,11 @@
                     </svg>
 
                     {{--
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                    <path
-                        d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-                </svg>
-
-                --}}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                        <path
+                            d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                    </svg>
+                    --}}
 
                 </span>
 
@@ -192,12 +189,10 @@
                     class=" w-7 h-7 shrink-0" />
 
                 <h4 x-cloak x-show="!(shrink||drawer)"
-                    class=" text-lg  {{ request()->routeIs('profile.home') ? 'font-bold' : 'font-medium' }} ">Profile
-                </h4>
+                    class=" text-lg  {{ request()->routeIs('profile.home') ? 'font-bold' : 'font-medium' }} ">Profile</h4>
             </a></li>
 
     </ul>
-
 
     {{-- Footer --}}
     <footer class="sticky bottom-0 mt-auto w-full grid px-3 z-50 bg-white">
@@ -247,8 +242,8 @@
                             </button>
                             {{-- <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                            {{ __('Log Out') }}
-                        </x-dropdown-link> --}}
+                                {{ __('Log Out') }}
+                            </x-dropdown-link> --}}
                         </form>
 
                     </a></li>
@@ -256,9 +251,59 @@
         </div>
     </footer>
 
-        <div x-show="drawer" class="fixed inset-y-0 left-[70px] w-96 bg-red-500 border rounded-r-2xl z-[5]">
+    {{-- TODO: When you create sidebar as livewire component use @teleport blade directive --}}
 
+    <div @click.outside="drawer=false;showSearch=false;showNotifications=false" x-cloak x-show="drawer"
+        x-transition.origin.left
+        class="fixed inset-y-0 left-[70px] relatve px-4 w-96 overflow-y-scroll
+              overflow-x-hidden overscroll-contain bg-white shadow border rounded-r-2xl z-50">
 
-        </div>
+        {{-- Search --}}
+        <template x-if="showSearch">
+            <div x-cloak class="h-full">
+
+                <header class="sticky top-0 w-full bg-white py-2">
+
+                    <h5 class="text-4xl font-bold my-4">Search</h5>
+
+                    {{-- Change type to search --}}
+                    <input type="search" wire:model.live='query' placeholder="Search "
+                        class="border-0 outline-none w-full focus:outline-none bg-gray-100 rounded-lg hover:ring-0 focus:ring-0 ">
+                </header>
+
+                {{-- search results --}}
+                <main class="my-2">
+
+                    @if ($results)
+                        <ul class="space-y-2 overflow-x-hidden">
+                            @foreach ($results as $key => $user)
+                                <li>
+                                    <a href="{{ route('profile.home', $user->username) }}"
+                                        class="flex gap-2 truncate items-center">
+                                        <x-avatar wire:ignore class="w-9 h-9 mb-auto"
+                                            src="https://source.unsplash.com/500x500?face-{{ $key }}" />
+
+                                        <div class="flex flex-col">
+                                            <span class="font-bold text-sm">{{ $user->username }}</span>
+                                            <span class="font-normal text-xs truncate">{{ fake()->sentence() }}</span>
+
+                                        </div>
+                                    </a>
+
+                                </li>
+                            @endforeach
+
+                        </ul>
+                    @else
+                        <center>
+                            No results
+                        </center>
+                    @endif
+                </main>
+
+            </div>
+        </template>
+
+    </div>
 
 </div>

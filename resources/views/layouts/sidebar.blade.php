@@ -2,8 +2,7 @@
     shrink: false,
     drawer: false
 
-}" class="menu p-3   w-20 overflow-x-hidden h-full grid bg-white border-r text-base-content"
-    :class="{ 'w-72 ': !shrink }">
+}" class="menu p-3   w-20 overflow-x-hidden h-full grid bg-white border-r text-base-content" :class="{ 'w-72': !shrink }">
 
     {{-- Logo --}}
     <div class="pt-3">
@@ -89,7 +88,7 @@
             </a></li>
 
 
-        <li><a wire:navigate href="{{route('reels')}}" class="flex items-center gap-5">
+        <li><a wire:navigate href="{{ route('reels') }}" class="flex items-center gap-5">
 
                 <span>
                     @if (request()->routeIs('reels'))
@@ -116,7 +115,8 @@
 
                 </span>
 
-                <h4 x-cloak x-show="!(shrink||drawer)" class=" text-lg {{request()->routeIs('reels')?'font-bold':'font-medium'}}">Reel</h4>
+                <h4 x-cloak x-show="!(shrink||drawer)"
+                    class=" text-lg {{ request()->routeIs('reels') ? 'font-bold' : 'font-medium' }}">Reel</h4>
             </a></li>
 
 
