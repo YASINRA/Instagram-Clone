@@ -4,6 +4,7 @@ namespace App\Livewire\Profile;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Notifications\NewFollowerNotification;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -15,6 +16,7 @@ class Home extends Component
     #[On('closeModal')]
     public function revertUrl()
     {
+
         $this->js("history.replaceState({}, '', '/')");
     }
 
@@ -22,7 +24,14 @@ class Home extends Component
     {
         abort_unless(auth()->check(), 401);
         auth()->user()->toggleFollow($this->user);
+
+        #send notification if is following
+        if (auth()->user()->isFollowing($this->user)) {
+
+            $this->user->notify(new NewFollowerNotification(auth()->user()));
+        }
     }
+
 
     function mount($user)
     {
@@ -31,6 +40,8 @@ class Home extends Component
 
     public function render()
     {
+
+        #add this in order to update the withCount() variables on hydrate
         $this->user = User::whereUsername($this->user->username)->withCount(['followers', 'followings', 'posts'])->firstOrFail();
 
         $posts = $this->user->posts()->whereType('post')->get();
