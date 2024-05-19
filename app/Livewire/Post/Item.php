@@ -19,7 +19,9 @@ class Item extends Component
         auth()->user()->toggleLike($this->post);
         #send notification post is liked
         if ($this->post->isLikedBy(auth()->user())) {
-            $this->post->user->notify(new PostLikedNotification(auth()->user(), $this->post));
+            if ($this->post->user_id != auth()->id()) {
+                $this->post->user->notify(new PostLikedNotification(auth()->user(), $this->post));
+            }
         }
     }
 
@@ -47,7 +49,10 @@ class Item extends Component
         ]);
         $this->reset(['body']);
         #Notifiy User
-        $this->post->user->notify(new NewCommentNotification(auth()->user(), $comment));
+        #make sure post does not belong to auth
+        if ($this->post->user_id != auth()->id()) {
+            $this->post->user->notify(new NewCommentNotification(auth()->user(), $comment));
+        }
     }
 
     public function render()
