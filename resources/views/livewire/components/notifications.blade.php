@@ -1,4 +1,11 @@
-<div class="p-3 w-full">
+<div x-init="     Echo.private('users.{{ auth()->user()->id }}')
+         .notification((notification) => {
+
+             //refresh componnet
+             $wire.$refresh();
+
+         });" class="p-3 w-full">
+    {{-- Nothing in the world is as soft and yielding as water. --}}
 
     <h3 class="font-bold text-4xl">Notifications</h3>
 

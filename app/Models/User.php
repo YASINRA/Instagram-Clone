@@ -11,13 +11,17 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Overtrue\LaravelFavorite\Traits\Favoriter;
-use Overtrue\LaravelFollow\Traits\Followable;
-use Overtrue\LaravelFollow\Traits\Follower;
 use Overtrue\LaravelLike\Traits\Liker;
+use Overtrue\LaravelFollow\Traits\Follower;
+use Overtrue\LaravelFollow\Traits\Followable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, Liker, Favoriter, Follower, Followable;
+    use HasApiTokens, HasFactory, Notifiable;
+    use Liker;
+    use Favoriter;
+    use Follower;
+    use Followable;
 
     /**
      * The attributes that are mass assignable.
@@ -28,7 +32,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'username',
+        'username'
     ];
 
     /**
@@ -51,12 +55,19 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    function posts() : HasMany {
+
+    function posts(): HasMany
+    {
         return $this->hasMany(Post::class);
     }
 
-    function comments() : HasMany {
-
+    function comments(): HasMany
+    {
         return $this->hasMany(Comment::class);
+    }
+
+    public function receivesBroadcastNotificationsOn(): string
+    {
+        return 'users.' . $this->id;
     }
 }
