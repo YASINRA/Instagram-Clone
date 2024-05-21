@@ -4,7 +4,7 @@
     showSearch: false,
     showNotifications: false
 
-}" x-init="$wire.shrink = {{ request()->routeIs('chat') }};"
+}" x-init="$wire.shrink = {{ request()->routeIs('chat') || request()->routeIs('chat.main') }};"
     class="menu p-3   w-20  h-full grid bg-white border-r text-base-content" :class="{ 'w-72 ': !shrink }">
 
     {{-- Logo --}}
@@ -122,7 +122,7 @@
         <li><a wire:navigate href="{{ route('chat') }}" class="flex items-center gap-5">
 
                 <span>
-                    @if (request()->routeIs('chat'))
+                    @if (request()->routeIs('chat') || request()->routeIs('chat.main'))
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                             fill="currentColor" viewBox="0 0 16 16">
                             <path
@@ -192,7 +192,8 @@
                     class=" w-7 h-7 shrink-0" />
 
                 <h4 x-cloak x-show="!(shrink||drawer)"
-                    class=" text-lg  {{ request()->routeIs('profile.home') ? 'font-bold' : 'font-medium' }} ">Profile</h4>
+                    class=" text-lg  {{ request()->routeIs('profile.home') ? 'font-bold' : 'font-medium' }} ">Profile
+                </h4>
             </a></li>
 
     </ul>

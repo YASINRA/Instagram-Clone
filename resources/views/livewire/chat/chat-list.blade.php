@@ -45,9 +45,9 @@
 
             {{-- Chat list item --}}
             <li
-                class="py-3 hover:bg-gray-50 rounded-2xl dark:hover:bg-gray-700/70 transition-colors duration-150 flex gap-4 relative w-full cursor-pointer px-2">
+                class="py-3 hover:bg-gray-50 rounded-2xl transition-colors duration-150 flex gap-4 relative w-full cursor-pointer px-2">
 
-                <a href="#" class="shrink-0">
+                <a href="{{ route('profile.home', 1) }}" class="shrink-0">
                     <x-avatar wire:ignore src="https://source.unsplash.com/500x500?face-{{ rand(0, 10) }}"
                         class="w-12 h-12" />
                 </a>
@@ -55,7 +55,7 @@
                 <aside class="grid grid-cols-12 w-full">
 
 
-                    <a href="#"
+                    <a href="{{ route('chat.main', 1) }}"
                         class="col-span-10 border-b pb-2 border-gray-200 relative overflow-hidden truncate leading-5 w-full flex-nowrap p-1">
 
                         {{-- name --}}
