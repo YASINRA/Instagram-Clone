@@ -5,6 +5,7 @@ namespace App\Livewire\Chat;
 use App\Models\Conversation;
 use App\Models\Message;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class Chat extends Component
 {
@@ -33,6 +34,17 @@ class Chat extends Component
         $this->conversation->save();
         #dispatch refresh event to chatlist
         $this->dispatch('refresh')->to(ChatList::class);
+    }
+
+    #[On('loadMore')]
+    public function loadMore(): void
+    {
+        #increment
+        $this->paginate_var += 10;
+        #call loadMessages()
+        $this->loadMessages();
+        #update the chat height
+        $this->dispatch('update-height');
     }
 
     public function loadMessages()

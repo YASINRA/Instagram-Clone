@@ -1,11 +1,10 @@
 <div x-data="{
+    height: 0,
     conversationElement: document.getElementById('conversation'),
 }" x-init="height = conversationElement.scrollHeight;
 $nextTick(() => conversationElement.scrollTop = height);"
     @scroll-bottom.window="
- $nextTick(()=>
- conversationElement.scrollTop= conversationElement.scrollHeight
- );
+ $nextTick(()=>conversationElement.scrollTop= conversationElement.scrollHeight);
  "
     class=" w-full overflow-hidden  h-full ">
 
@@ -74,16 +73,37 @@ $nextTick(() => conversationElement.scrollTop = height);"
         </header>
 
         {{-- Messages --}}
-        <main id="conversation"
+        <main
+            @scroll="
+                scropTop = $el.scrollTop;
+                if(scropTop <= 0){
+                    @this.dispatch('loadMore');
+                }
+            "
+            @update-height.window="
+
+                $nextTick(()=>{
+                      newHeight= $el.scrollHeight;
+
+                      oldHeight= height;
+
+                      $el.scrollTop= newHeight- oldHeight;
+
+                      height=newHeight;
+                    });
+
+
+                "
+            id="conversation"
             class="flex flex-col   gap-5   p-2.5  overflow-y-auto flex-grow  overscroll-contain overflow-x-hidden w-full my-auto ">
 
             <!--Message-->
-            @foreach ($loadedMessages as $message)
+            @foreach ($loadedMessages as $key => $message)
                 @php
                     $belongsToAuth = $message->sender_id == auth()->id();
                 @endphp
                 {{-- left side message --}}
-                <div @class([
+                <div wire:key="{{ $key }}" @class([
                     'max-w-[85%] md:max-w-[78%] flex  w-auto  gap-2 relative mt-2',
                     'ml-auto' => $belongsToAuth, // SET true if belongs to auth
                 ])>
@@ -162,8 +182,8 @@ $nextTick(() => conversationElement.scrollTop = height);"
 
                     {{-- Heart --}}
                     <button>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
-                            stroke="currentColor" class="w-7 h-7">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="1.8" stroke="currentColor" class="w-7 h-7">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
                         </svg>
