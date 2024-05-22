@@ -69,66 +69,37 @@
             class="flex flex-col   gap-5   p-2.5  overflow-y-auto flex-grow  overscroll-contain overflow-x-hidden w-full my-auto ">
 
             <!--Message-->
-
-            <div @class([
-                'max-w-[85%] md:max-w-[78%] flex  w-auto  gap-2 relative mt-2',
-                'ml-auto' => false, // SET true if belongs to auth
-            ])>
-                {{-- Avatar --}}
+            @foreach ($loadedMessages as $message)
+                @php
+                    $belongsToAuth = $message->sender_id == auth()->id();
+                @endphp
+                {{-- left side message --}}
                 <div @class([
-                    'shrink-0',
-                    'invisible' => false, //SET true if belongs to auth
+                    'max-w-[85%] md:max-w-[78%] flex  w-auto  gap-2 relative mt-2',
+                    'ml-auto' => $belongsToAuth, // SET true if belongs to auth
                 ])>
-                    <x-avatar class="h-7 w-7 lg:w-11 lg:h-11 " src="https://source.unsplash.com/1600x900/?face" />
-                </div>
+                    {{-- Avatar --}}
+                    <div @class([
+                        'shrink-0',
+                        'invisible' => $belongsToAuth, //SET true if belongs to auth
+                    ])>
+                        <x-avatar class="h-7 w-7 lg:w-11 lg:h-11 " src="https://source.unsplash.com/1600x900/?face" />
+                    </div>
 
-                {{-- message body --}}
-                <div @class([
-                    'flex  flex-wrap text-[15px] border border-gray-200/40 rounded-xl p-2.5 flex flex-col text-black bg-[#f6f6f8fb]',
-                    'bg-blue-500/80 text-white' => false, //SET true if belongs to auth
-                ])>
+                    {{-- message body --}}
+                    <div @class([
+                        'flex  flex-wrap text-[15px] border border-gray-200/40 rounded-xl p-2.5 flex flex-col text-black bg-[#f6f6f8fb]',
+                        'bg-blue-500/80 text-white' => $belongsToAuth, //SET true if belongs to auth
+                    ])>
 
-                    <p class="  whitespace-normal truncate text-sm md:text-base  tracking-wide lg:tracking-normal ">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore quam asperiores rerum ab alias,
-                        doloribus pariatur exercitationem facilis voluptatum quis atque laudantium quae iusto
-                        voluptatibus rem explicabo maiores excepturi aut! exercitationem facilis voluptatum quis atque
-                        laudantium quae iusto voluptatibus rem explicabo maiores excepturi aut! exercitationem facilis
-                        voluptatum quis atque laudantium quae iusto voluptatibus rem explicabo maiores excepturi aut!
-                    </p>
+                        <p class="  whitespace-normal truncate text-sm md:text-base  tracking-wide lg:tracking-normal ">
+                            {{ $message->body }}
+                        </p>
 
-                </div>
-
-            </div>
-
-            <div @class([
-                'max-w-[85%] md:max-w-[78%] flex  w-auto  gap-2 relative mt-2',
-                'ml-auto' => true, // SET true if belongs to auth
-            ])>
-                {{-- Avatar --}}
-                <div @class([
-                    'shrink-0',
-                    'invisible' => true, //SET true if belongs to auth
-                ])>
-                    <x-avatar class="h-7 w-7 lg:w-11 lg:h-11 " src="https://source.unsplash.com/1600x900/?face" />
-                </div>
-
-                {{-- message body --}}
-                <div @class([
-                    'flex  flex-wrap text-[15px] rounded-xl p-2.5 flex border  border-gray-200/40 flex-col text-black bg-[#f6f6f8fb]',
-                    'bg-blue-500/80 text-white' => true, //Message belongs to auth
-                ])>
-
-                    <p class="  whitespace-normal truncate text-sm md:text-base  tracking-wide lg:tracking-normal ">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore quam asperiores rerum ab alias,
-                        doloribus pariatur exercitationem facilis voluptatum quis atque laudantium quae iusto
-                        voluptatibus rem explicabo maiores excepturi aut! exercitationem facilis voluptatum quis atque
-                        laudantium quae iusto voluptatibus rem explicabo maiores excepturi aut! exercitationem facilis
-                        voluptatum quis atque laudantium quae iusto voluptatibus rem explicabo maiores excepturi aut!
-                    </p>
+                    </div>
 
                 </div>
-
-            </div>
+            @endforeach
 
         </main>
 
@@ -151,8 +122,8 @@
                     @csrf
                     <input type="hidden" autocomplete="false" style="display: none">
                     <div class="grid grid-cols-12">
-                        <input autocomplete="off" wire:model.defer='body' id="sendMessage" autofocus type="text"
-                            name="message" placeholder="Message" maxlength="1700"
+                        <input autocomplete="off" wire:model='body' autofocus type="text" name="message"
+                            placeholder="Message" maxlength="1700"
                             class="col-span-10  border-0  outline-0 focus:border-0 focus:ring-0  hover:ring-0 rounded-lg   dark:text-gray-300     focus:outline-none   " />
 
                         <button type="submit" class="col-span-2 text-blue-500 font-bold">Send</button>

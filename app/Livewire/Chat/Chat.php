@@ -10,6 +10,9 @@ class Chat extends Component
 {
     public Conversation $conversation;
     public $receiver;
+    public $body = null;
+    public $loadedMessages;
+    public $paginate_var = 10;
 
     function sendMessage()
     {
@@ -23,9 +26,22 @@ class Chat extends Component
         $this->reset('body');
     }
 
+    public function loadMessages()
+    {
+        #get count
+        $count = Message::where('conversation_id', $this->conversation->id)->count();
+        #skip and query
+        $this->loadedMessages = Message::where('conversation_id', $this->conversation->id)
+            ->skip($count - $this->paginate_var)
+            ->take($this->paginate_var)
+            ->get();
+        return $this->loadedMessages;
+    }
+
     function mount()
     {
         $this->receiver =  $this->conversation->getReceiver();
+        $this->loadMessages();
     }
 
     public function render()
