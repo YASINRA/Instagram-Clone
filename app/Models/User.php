@@ -55,7 +55,6 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-
     function posts(): HasMany
     {
         return $this->hasMany(Post::class);
@@ -64,6 +63,12 @@ class User extends Authenticatable
     function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
+    }
+
+
+    public function conversations()
+    {
+        return $this->hasMany(Conversation::class, 'sender_id')->orWhere('receiver_id', $this->id);
     }
 
     public function receivesBroadcastNotificationsOn(): string
