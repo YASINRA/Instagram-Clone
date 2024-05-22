@@ -2,14 +2,27 @@
     height: 0,
     conversationElement: document.getElementById('conversation'),
 }" x-init="height = conversationElement.scrollHeight;
-$nextTick(() => conversationElement.scrollTop = height);"
+$nextTick(() => conversationElement.scrollTop = height);
+
+Echo.private('users.{{ Auth()->User()->id }}')
+    .notification((notification) => {
+        if (
+            notification['type'] == 'App\\Notifications\\MessageSentNotification' &&
+            notification['conversation_id'] == {{ $conversation->id }}) {
+
+            $wire.listenBroadcastedMessage(notification);
+
+        }
+    });"
     @scroll-bottom.window="
  $nextTick(()=>conversationElement.scrollTop= conversationElement.scrollHeight);
  "
     class=" w-full overflow-hidden  h-full ">
 
     <div class="  border-r   flex flex-col overflow-y-scroll grow  h-full">
-        {{-- Header --}}
+        {{-- ---------- --}}
+        {{-- ---Header- --}}
+        {{-- ---------- --}}
 
         <header class="w-full  sticky inset-x-0 flex pb-[5px] pt-[7px] top-0 z-10 bg-white border-b">
 
@@ -27,12 +40,13 @@ $nextTick(() => conversationElement.scrollTop = height);"
                 <div class=" shrink-0 ">
                     <a href="{{ route('profile.home', $receiver->username) }}">
                         <x-avatar wire:ignore class="h-8 w-8 lg:w-10 lg:h-10 " />
+
                     </a>
                 </div>
 
                 <h6 class="font-bold truncate">
                     <a href="{{ route('profile.home', $receiver->username) }}">
-                        {{ $receiver->name }}
+                        {{ $receiver->email }}
                     </a>
                 </h6>
 
@@ -72,7 +86,9 @@ $nextTick(() => conversationElement.scrollTop = height);"
 
         </header>
 
-        {{-- Messages --}}
+        {{-- ---------- --}}
+        {{-- -Messages- --}}
+        {{-- ---------- --}}
         <main
             @scroll="
                 scropTop = $el.scrollTop;
@@ -98,6 +114,9 @@ $nextTick(() => conversationElement.scrollTop = height);"
             class="flex flex-col   gap-5   p-2.5  overflow-y-auto flex-grow  overscroll-contain overflow-x-hidden w-full my-auto ">
 
             <!--Message-->
+
+
+
             @foreach ($loadedMessages as $key => $message)
                 @php
                     $belongsToAuth = $message->sender_id == auth()->id();
@@ -130,9 +149,15 @@ $nextTick(() => conversationElement.scrollTop = height);"
                 </div>
             @endforeach
 
+
+
+
         </main>
 
-        {{-- Send Message --}}
+
+        {{-- ---------------- --}}
+        {{-- Send Message --- --}}
+        {{-- ---------------- --}}
 
         <footer class="shrink-0 z-10 bg-white dark:bg-inherit inset-x-0 py-2">
             <div
