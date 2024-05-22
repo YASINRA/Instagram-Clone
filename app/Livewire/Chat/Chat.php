@@ -23,6 +23,8 @@ class Chat extends Component
             'receiver_id' => $this->receiver->id,
             'body' => $this->body
         ]);
+        #scroll to bottom
+        $this->dispatch('scroll-bottom');
         $this->reset('body');
         #push the message
         $this->loadedMessages->push($createdMessage);

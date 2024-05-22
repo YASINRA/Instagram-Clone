@@ -1,4 +1,13 @@
-<div class=" w-full overflow-hidden  h-full ">
+<div x-data="{
+    conversationElement: document.getElementById('conversation'),
+}" x-init="height = conversationElement.scrollHeight;
+$nextTick(() => conversationElement.scrollTop = height);"
+    @scroll-bottom.window="
+ $nextTick(()=>
+ conversationElement.scrollTop= conversationElement.scrollHeight
+ );
+ "
+    class=" w-full overflow-hidden  h-full ">
 
     <div class="  border-r   flex flex-col overflow-y-scroll grow  h-full">
         {{-- Header --}}
@@ -65,7 +74,7 @@
         </header>
 
         {{-- Messages --}}
-        <main
+        <main id="conversation"
             class="flex flex-col   gap-5   p-2.5  overflow-y-auto flex-grow  overscroll-contain overflow-x-hidden w-full my-auto ">
 
             <!--Message-->
