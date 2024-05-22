@@ -147,7 +147,7 @@
                     </svg>
                 </span>
 
-                <form method="POST" autocapitalize="off" class="col-span-11 md:col-span-9 ">
+                <form wire:submit="sendMessage" method="POST" autocapitalize="off" class="col-span-11 md:col-span-9 ">
                     @csrf
                     <input type="hidden" autocomplete="false" style="display: none">
                     <div class="grid grid-cols-12">
