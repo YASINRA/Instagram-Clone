@@ -4,6 +4,7 @@ namespace App\Livewire\Chat;
 
 use App\Models\Conversation;
 use App\Models\Message;
+use App\Notifications\MessageSentNotification;
 use Livewire\Component;
 use Livewire\Attributes\On;
 
@@ -34,6 +35,11 @@ class Chat extends Component
         $this->conversation->save();
         #dispatch refresh event to chatlist
         $this->dispatch('refresh')->to(ChatList::class);
+        $this->receiver->notify(new MessageSentNotification(
+            Auth()->User(),
+            $createdMessage,
+            $this->conversation,
+        ));
     }
 
     #[On('loadMore')]
