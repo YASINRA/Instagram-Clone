@@ -62,7 +62,7 @@
                         <div class="col-span-12 lg:col-span-6 grid grid-cols-2 gap-3 ">
 
                             {{-- Send message button --}}
-                            <a href="#" type="button"
+                            <a type="button"
                                 class=" inline-flex justify-center font-bold items-center  rounded-lg  text-sm p-1.5 px-2 transition  bg-gray-200 hover:bg-slate-100 ">
                                 Edit profile
                             </a>
@@ -96,7 +96,7 @@
                             @endif
 
                             {{-- Send message button --}}
-                            <button type="button"
+                            <button wire:click="message({{ $user->id }})" type="button"
                                 class=" inline-flex justify-center font-bold items-center  rounded-lg  text-sm p-1.5 px-2 transition  bg-gray-200 hover:bg-slate-100 ">
                                 Massage
                             </button>
@@ -142,11 +142,9 @@
         <ul class="grid grid-cols-3 gap-4 max-w-sm mx-auto pb-3 ">
             {{-- Posts --}}
             <li
-                class="flex items-center gap-2 py-2 cursor-pointer  {{ request()->routeIs('profile.home') ? 'border-t border-black' : '' }}">
+                class="flex items-center  py-2 cursor-pointer  {{ request()->routeIs('profile.home') ? 'border-t border-black ' : '' }}">
                 {{-- border icon from bootsrap icons --}}
-                <a wire:navigate class="flex items-center gap-2 py-2 cursor-pointer"
-                    href="{{ route('profile.home', $user->username) }}">
-
+                <a wire:navigate href="{{ route('profile.home', $user->username) }}" class="flex gap-2 items-center ">
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-border-all lg:w-5 lg:h-5" viewBox="0 0 16 16">
@@ -156,20 +154,14 @@
                     </span>
 
                     <h4 class="font-bold capitalize">Posts</h4>
-
                 </a>
-
             </li>
 
-            {{-- reels --}}
+            {{-- Posts --}}
             <li
-                class="flex items-center gap-2 py-2 cursor-pointer {{ request()->routeIs('profile.reels') ? 'border-t border-black' : '' }} ">
+                class="flex items-center gap-2 py-2 cursor-pointer  {{ request()->routeIs('profile.reels') ? 'border-t border-black ' : ' ' }} ">
                 {{-- border icon from bootsrap icons --}}
-
-                <a wire:navigate class="flex items-center gap-2 py-2 cursor-pointer"
-                    href="{{ route('profile.reels', $user->username) }}">
-
-
+                <a wire:navigate href="{{ route('profile.reels', $user->username) }}" class="flex gap-2 items-center ">
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" id="instagram-reel">
                             <path fill="currentColor" fill-rule="evenodd"
@@ -189,31 +181,24 @@
                 </a>
             </li>
 
-            @auth
-                @if (auth()->user()->id == $user->id)
-                    {{-- Saved --}}
-                    <li
-                        class="flex items-center gap-2 py-2 cursor-pointer {{ request()->routeIs('profile.saved') ? 'border-t border-black' : '' }}">
-                        {{-- Tag icon from bootsrap icons --}}
+            {{-- Saved --}}
+            <li
+                class="flex items-center gap-2 py-2 cursor-pointer {{ request()->routeIs('profile.saved') ? 'border-t border-black ' : ' ' }}  ">
 
-                        <a wire:navigate class="flex items-center gap-2 py-2 cursor-pointer"
-                            href="{{ route('profile.saved', $user->username) }}">
+                {{-- Tag icon from bootsrap icons --}}
+                <a wire:navigate href="{{ route('profile.saved', $user->username) }}" class="flex gap-2 items-center ">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-bookmark lg:w-5 lg:h-5" viewBox="0 0 16 16">
+                            <path
+                                d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
+                        </svg>
+                    </span>
 
-                            <span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-bookmark lg:w-5 lg:h-5" viewBox="0 0 16 16">
-                                    <path
-                                        d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
-                                </svg>
-                            </span>
+                    <h4 class="font-bold capitalize">Saved</h4>
+                </a>
 
-                            <h4 class="font-bold capitalize">Saved</h4>
-
-                        </a>
-
-                    </li>
-                @endif
-            @endauth
+            </li>
         </ul>
 
 
