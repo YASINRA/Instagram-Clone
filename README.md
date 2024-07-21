@@ -1,3 +1,5 @@
+# Instagram Clone App
+
 ## Quick Start
 
 -   Clone or download this repo and place it into your server.
