@@ -7,17 +7,16 @@ use Livewire\Component;
 
 class Sidebar extends Component
 {
-    public $query;
-    public $results;
+    public $shrink = false;
+    public $drawer = false;
 
-    public $drawer=false;
-    public $shrink=false;
+    public $results;
+    public $query;
 
     function updatedQuery($query)
     {
-        //return null if query is empty
         if ($query == '') {
-            return  $this->results = null;
+            return $this->results = null;
         }
 
         $this->results = User::where('username', 'like', '%' . $query . '%')

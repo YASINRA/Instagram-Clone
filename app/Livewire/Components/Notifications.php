@@ -1,3 +1,4 @@
+
 <?php
 
 namespace App\Livewire\Components;
@@ -12,7 +13,6 @@ class Notifications extends Component
     {
         abort_unless(auth()->check(), 401);
         auth()->user()->toggleFollow($user);
-        #send notification if is following
         if (auth()->user()->isFollowing($user)) {
             $user->notify(new NewFollowerNotification(auth()->user()));
         }
