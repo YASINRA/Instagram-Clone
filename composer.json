@@ -10,7 +10,7 @@
         "laravel/reverb": "@beta",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
-        "livewire/livewire": "^3.4",
+        "livewire/livewire": "^3.5",
         "overtrue/laravel-favorite": "^5.2",
         "overtrue/laravel-follow": "^5.2",
         "overtrue/laravel-like": "^5.3",
