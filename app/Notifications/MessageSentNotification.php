@@ -6,13 +6,12 @@ use App\Models\Conversation;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class MessageSentNotification extends Notification implements ShouldBroadcastNow
+class MessageSentNotification extends Notification  implements ShouldBroadcastNow
 {
     use Queueable;
 
@@ -35,17 +34,6 @@ class MessageSentNotification extends Notification implements ShouldBroadcastNow
     public function via(object $notifiable): array
     {
         return ['broadcast'];
-    }
-
-    /**
-     * Get the mail representation of the notification.
-     */
-    public function toMail(object $notifiable): MailMessage
-    {
-        return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
     }
 
     /**

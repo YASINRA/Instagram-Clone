@@ -51,10 +51,8 @@ class NewCommentNotification extends Notification implements ShouldBroadcastNow
     public function toArray(object $notifiable): array
     {
         return [
-            //
             'user_id' => $this->user->id,
             'comment_id' => $this->comment->id,
-
         ];
     }
 }

@@ -29,7 +29,7 @@ class PostLikedNotification extends Notification implements ShouldBroadcastNow
      */
     public function via(object $notifiable): array
     {
-        return ['broadcast', 'database'];
+        return ['database', 'broadcast'];
     }
 
     /**

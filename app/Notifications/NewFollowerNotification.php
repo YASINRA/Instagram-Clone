@@ -28,7 +28,7 @@ class NewFollowerNotification extends Notification implements ShouldBroadcastNow
      */
     public function via(object $notifiable): array
     {
-        return ['broadcast', 'database'];
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -50,7 +50,6 @@ class NewFollowerNotification extends Notification implements ShouldBroadcastNow
     public function toArray(object $notifiable): array
     {
         return [
-
             'user_id' => $this->user->id
         ];
     }
