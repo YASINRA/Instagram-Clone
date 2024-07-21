@@ -8,10 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Conversation extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'receiver_id',
-        'sender_id'
-    ];
+    
+    protected $guarded=[];
 
     public function messages()
     {

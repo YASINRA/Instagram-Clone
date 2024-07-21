@@ -9,13 +9,8 @@ class Message extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'body',
-        'sender_id',
-        'receiver_id',
-        'conversation_id',
-        'read_at',
-    ];
+    protected $guarded=[];
+
     protected $dates = ['read_at'];
 
     public function conversation()
