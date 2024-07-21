@@ -17,7 +17,7 @@ class Item extends Component
     {
         abort_unless(auth()->check(), 401);
         auth()->user()->toggleLike($this->post);
-        #send notification post is liked
+
         if ($this->post->isLikedBy(auth()->user())) {
             if ($this->post->user_id != auth()->id()) {
                 $this->post->user->notify(new PostLikedNotification(auth()->user(), $this->post));
@@ -40,16 +40,15 @@ class Item extends Component
     function addComment()
     {
         $this->validate(['body' => 'required']);
-        #create comment
         $comment = Comment::create([
             'body' => $this->body,
             'commentable_id' => $this->post->id,
             'commentable_type' => Post::class,
-            'user_id' => auth()->id()
+            'user_id' => auth()->id(),
         ]);
-        $this->reset(['body']);
-        #Notifiy User
-        #make sure post does not belong to auth
+
+        $this->reset('body');
+
         if ($this->post->user_id != auth()->id()) {
             $this->post->user->notify(new NewCommentNotification(auth()->user(), $comment));
         }
@@ -57,7 +56,6 @@ class Item extends Component
 
     public function render()
     {
-        // dd($this->post);
         return view('livewire.post.item');
     }
 }
