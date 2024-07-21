@@ -8,15 +8,15 @@ use Livewire\Component;
 
 class Explore extends Component
 {
-     #[On('closeModal')]
-     public function revertUrl()
-     {
-         $this->js("history.replaceState({}, '', '/explore')");
-     }
+    #[On('closeModal')]
+    function reverUrl()
+    {
+        $this->js("history.replaceState({},'','/explore')");
+    }
 
     public function render()
     {
-        $posts= Post::limit(20)->get();
-        return view('livewire.explore',['posts'=>$posts]);
+        $posts = Post::limit(20)->get();
+        return view('livewire.explore', ['posts' => $posts]);
     }
 }
