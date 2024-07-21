@@ -2,9 +2,7 @@
 
 namespace App\Livewire\Profile;
 
-use App\Models\Post;
 use App\Models\User;
-use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -13,9 +11,9 @@ class Reels extends Component
     public $user;
 
     #[On('closeModal')]
-    public function revertUrl()
+    function reverUrl()
     {
-        $this->js("history.replaceState({}, '', '/')");
+        $this->js("history.replaceState({},'','/')");
     }
 
     function toggleFollow()
@@ -33,7 +31,7 @@ class Reels extends Component
     {
         $this->user = User::whereUsername($this->user->username)->withCount(['followers', 'followings', 'posts'])->firstOrFail();
 
-        $posts = $this->user->posts()->whereType('reel')->get();
+        $posts =   $this->user->posts()->where('type', 'reel')->get();
         return view('livewire.profile.reels', ['posts' => $posts]);
     }
 }
