@@ -13,6 +13,7 @@ class Media extends Model
     protected $guarded=[];
 
     function mediable() : MorphTo {
+        
         return $this->morphTo();
     }
 }

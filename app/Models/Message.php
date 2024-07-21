@@ -11,15 +11,19 @@ class Message extends Model
 
     protected $guarded=[];
 
-    protected $dates = ['read_at'];
+    protected $dates=['read_at'];
 
-    public function conversation()
-    {
+
+    function conversation()  {
+
         return $this->belongsTo(Conversation::class);
+        
     }
 
-    public function isRead(): bool
-    {
-        return $this->read_at != null;
+    function isRead()  {
+
+        return $this->read_at!=null;
+        
     }
+
 }

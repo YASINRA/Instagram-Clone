@@ -13,6 +13,7 @@ use Illuminate\Notifications\Notification;
 
 class MessageSentNotification extends Notification  implements ShouldBroadcastNow
 {
+
     use Queueable;
 
     /**
@@ -22,7 +23,9 @@ class MessageSentNotification extends Notification  implements ShouldBroadcastNo
         public User $user,
         public Message $message,
         public Conversation $conversation
-    ) {
+
+    )
+    {
         //
     }
 
@@ -36,6 +39,8 @@ class MessageSentNotification extends Notification  implements ShouldBroadcastNo
         return ['broadcast'];
     }
 
+  
+
     /**
      * Get the array representation of the notification.
      *
@@ -44,9 +49,10 @@ class MessageSentNotification extends Notification  implements ShouldBroadcastNo
     public function toArray(object $notifiable): array
     {
         return [
-            'user_id' => $this->user->id,
-            'message_id' => $this->message->id,
-            'conversation_id' => $this->conversation->id,
+            'user_id'=>$this->user->id,
+            'message_id'=>$this->message->id,
+            'conversation_id'=>$this->conversation->id
+
         ];
     }
 }

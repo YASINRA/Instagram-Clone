@@ -5,32 +5,42 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Overtrue\LaravelLike\Traits\Likeable;
 
+
 class Comment extends Model
 {
-    use HasFactory, SoftDeletes, Likeable;
-
+    use HasFactory;
+    use SoftDeletes;
+    use Likeable;
     protected $guarded=[];
 
-    public function commentable()
-    {
+
+    function commentable() : MorphTo {
+        
         return $this->morphTo();
     }
 
-    public function parent()
-    {
-     return $this->belongsTo(Self::class, 'parent_id');
+
+    #parent 
+
+    function parent() : BelongsTo {
+
+        return $this->belongsTo(Self::class,'parent_id');
+        
     }
 
-    public function replies()
-    {
-        return $this->hasMany(Comment::class, 'parent_id','id')->with('replies');
+
+    function replies()  {
+
+        return $this->hasMany(Comment::class,'parent_id','id')->with('replies');
+        
     }
 
     function user() : BelongsTo {
-
-        return $this->BelongsTo(User::class);
+        
+        return $this->belongsTo(User::class);
     }
 }

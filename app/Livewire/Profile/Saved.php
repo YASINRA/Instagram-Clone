@@ -11,11 +11,14 @@ class Saved extends Component
 {
     public $user;
 
+
+
     #[On('closeModal')]
     function reverUrl()
     {
         $this->js("history.replaceState({},'','/')");
     }
+
 
     function toggleFollow()
     {
@@ -23,16 +26,18 @@ class Saved extends Component
         auth()->user()->toggleFollow($this->user);
     }
 
+
     function mount($user)
     {
+
         $this->user = User::whereUsername($user)->withCount(['followers', 'followings', 'posts'])->firstOrFail();
     }
 
     public function render()
     {
         $this->user = User::whereUsername($this->user->username)->withCount(['followers', 'followings', 'posts'])->firstOrFail();
-
-        $posts =   $this->user->getFavoriteItems(Post::class)->get();
-        return view('livewire.profile.saved', ['posts' => $posts]);
+       
+        $posts=   $this->user->getFavoriteItems(Post::class)->get();
+        return view('livewire.profile.saved',['posts'=>$posts]);
     }
 }

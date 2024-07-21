@@ -3,22 +3,22 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Overtrue\LaravelFavorite\Traits\Favoriter;
 use Overtrue\LaravelLike\Traits\Liker;
-use Overtrue\LaravelFollow\Traits\Follower;
+use Overtrue\LaravelFavorite\Traits\Favoriter;
 use Overtrue\LaravelFollow\Traits\Followable;
-
+use Overtrue\LaravelFollow\Traits\Follower;
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, Liker, Favoriter, Follower, Followable;
-
+    use HasApiTokens, HasFactory, Notifiable;
+    use Liker;
+    use Favoriter;
+    use Follower;
+    use Followable;
     /**
      * The attributes that are mass assignable.
      *
@@ -51,24 +51,29 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    function posts(): HasMany
-    {
+    function posts() : HasMany {
+
         return $this->hasMany(Post::class);
     }
 
-    function comments(): HasMany
-    {
+
+    function comments() : HasMany {
+
         return $this->hasMany(Comment::class);
+        
     }
 
+    function conversations() :HasMany {
 
-    public function conversations()
-    {
-        return $this->hasMany(Conversation::class, 'sender_id')->orWhere('receiver_id', $this->id);
+        return $this->hasMany(Conversation::class,'sender_id')->orWhere('receiver_id',$this->id);
+        
     }
 
+    /**
+     * The channels the user receives notification broadcasts on.
+     */
     public function receivesBroadcastNotificationsOn(): string
     {
-        return 'users.' . $this->id;
+        return 'users.'.$this->id;
     }
 }

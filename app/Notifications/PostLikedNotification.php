@@ -17,7 +17,7 @@ class PostLikedNotification extends Notification implements ShouldBroadcastNow
     /**
      * Create a new notification instance.
      */
-    public function __construct(public User $user, public Post $post)
+    public function __construct(public User $user,public Post $post)
     {
         //
     }
@@ -29,7 +29,7 @@ class PostLikedNotification extends Notification implements ShouldBroadcastNow
      */
     public function via(object $notifiable): array
     {
-        return ['database', 'broadcast'];
+        return ['database','broadcast'];
     }
 
     /**
@@ -38,9 +38,9 @@ class PostLikedNotification extends Notification implements ShouldBroadcastNow
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -51,8 +51,10 @@ class PostLikedNotification extends Notification implements ShouldBroadcastNow
     public function toArray(object $notifiable): array
     {
         return [
-            'user_id' => $this->user->id,
-            'post_id' => $this->post->id,
+            //
+            'user_id'=>$this->user->id,
+            'post_id'=>$this->post->id,
+
         ];
     }
 }

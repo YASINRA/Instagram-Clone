@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Livewire\Chat;
@@ -11,76 +10,127 @@ use Livewire\Component;
 
 class Chat extends Component
 {
+
+
     public Conversation $conversation;
+
+
     public $receiver;
     public $body;
-    public $loadedMessages;
-    public $paginate_var = 10;
 
-    function listenBroadcastedMessage($event)
-    {
+    public $loadedMessages;
+    public $paginate_var= 10;
+
+
+    function listenBroadcastedMessage($event)  {
+
+       // dd('reached');
+
         $this->dispatch('scroll-bottom');
 
-        $newMessage = Message::find($event['message_id']);
+        $newMessage= Message::find($event['message_id']);
+
+
+
+        #push message
 
         $this->loadedMessages->push($newMessage);
 
-        $newMessage->read_at = now();
+        #mark as read
+
+        $newMessage->read_at= now();
         $newMessage->save();
+        
     }
 
-    function sendMessage()
-    {
-        $this->validate(['body' => 'required|string']);
-        $createdMessage = Message::create([
-            'conversation_id' => $this->conversation->id,
-            'sender_id' => auth()->id(),
-            'receiver_id' => $this->receiver->id,
-            'body' => $this->body
+
+    function sendMessage()  {
+
+        $this->validate(['body'=>'required|string']);
+
+
+        $createdMessage= Message::create([
+            'conversation_id'=>$this->conversation->id,
+            'sender_id'=>auth()->id(),
+            'receiver_id'=>$this->receiver->id,
+            'body'=>$this->body
         ]);
 
+        #scroll to bottom
         $this->dispatch('scroll-bottom');
 
         $this->reset('body');
 
+        #push the message
         $this->loadedMessages->push($createdMessage);
 
-        $this->conversation->updated_at = now();
+
+        #update the conversation model - for sorting in chatlist
+        $this->conversation->updated_at=now();
         $this->conversation->save();
 
+        #dispatch event 'refresh ' to chatlist 
         $this->dispatch('refresh')->to(ChatList::class);
+
+        #broadcast new message
 
         $this->receiver->notify(new MessageSentNotification(
             auth()->user(),
             $createdMessage,
             $this->conversation
         ));
+
+
+
+
+
+        
     }
+
+
 
     #[On('loadMore')]
-    function loadMore()
-    {
-        $this->paginate_var += 10;
+    function loadMore()  {
+
+        //dd('reached');
+
+        #increment
+        $this->paginate_var +=10;
+
+        #call loadMessage
         $this->loadMessages();
+
+        #dispatch event- update height
         $this->dispatch('update-height');
+        
     }
 
-    function loadMessages()
-    {
-        $count = Message::where('conversation_id', $this->conversation->id)->count();
 
-        $this->loadedMessages = Message::where('conversation_id', $this->conversation->id)
-            ->skip($count - $this->paginate_var)
-            ->take($this->paginate_var)
-            ->get();
+    function loadMessages()  {
 
-        return $this->loadedMessages;
+         #get count
+         $count= Message::where('conversation_id',$this->conversation->id)->count();
+
+         #skip and query
+
+         $this->loadedMessages= Message::where('conversation_id',$this->conversation->id)
+                                ->skip($count- $this->paginate_var)
+                                ->take($this->paginate_var)
+                                ->get();
+
+          return $this->loadedMessages;
+
+
     }
 
-    function mount()
-    {
-        $this->receiver = $this->conversation->getReceiver();
+    function mount()  {
+
+        $this->receiver= $this->conversation->getReceiver();
+
         $this->loadMessages();
+
+        
+
     }
 
     public function render()
